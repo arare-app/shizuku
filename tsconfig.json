@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES5",
+    "lib": ["DOM", "ES2022"],
+    "baseUrl": ".",
+    "outDir": "dist",
+  }
+}

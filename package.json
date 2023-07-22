@@ -1,0 +1,15 @@
+{
+  "name": "bcscripts",
+  "version": "0.0.1",
+  "description": "Scripts for Bondage Club",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format iife --minify --dts",
+    "pub": "yarn node -r esbuild-register build/publish.ts"
+  },
+  "devDependencies": {
+    "tsup": "^7.1.0",
+    "esbuild-register": "^3.4.2"
+  }
+}

@@ -1,9 +1,13 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
-    "target": "ES5",
+    "target": "ES2019",
     "lib": ["DOM", "ES2022"],
     "baseUrl": ".",
     "outDir": "dist",
-  }
+    // "skipLibCheck": true,
+    // "skipDefaultLibCheck": true,
+    "types": ["./src/types/bondage-club.d.ts"]
+  },
+  "include": ["src/**/*"],
 }

@@ -2,14 +2,25 @@
   "name": "bcscripts",
   "version": "0.0.1",
   "description": "Scripts for Bondage Club",
-  "main": "dist/index.js",
+  "main": "dist/index.global.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "build": "tsup src/index.ts --format iife --minify --dts",
-    "pub": "yarn node -r esbuild-register build/publish.ts"
+    "build": "yarn build:tsup --minify",
+    "build:tsup": "tsup src/index.ts --format iife --dts --clean --sourcemap --target chrome75",
+    "dev": "yarn build:tsup && yarn serve",
+    "pub": "yarn node -r esbuild-register build/publish.ts",
+    "serve": "serve -l 3000 --cors"
   },
   "devDependencies": {
+    "@types/node": "^20.4.3",
+    "bc-stubs": "github:bananarama92/BC-stubs",
+    "esbuild-register": "^3.4.2",
+    "serve": "^14.2.0",
+    "socket.io-client": "^4.7.1",
     "tsup": "^7.1.0",
-    "esbuild-register": "^3.4.2"
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "bondage-club-mod-sdk": "^1.1.0"
   }
 }

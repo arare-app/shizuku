@@ -20,7 +20,7 @@ setTimeout(
 			const n = document.createElement("script");
 			n.setAttribute("language", "JavaScript");
 			n.setAttribute("crossorigin", "anonymous");
-			n.setAttribute("src", "https://maikolib.github.io/bcscripts/index.js?_=" + Date.now());
+			n.setAttribute("src", "https://maikolib.github.io/bcscripts/index.global.js?_=" + Date.now());
 			n.onload = () => n.remove();
 			document.head.appendChild(n);
 		}

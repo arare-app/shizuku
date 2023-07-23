@@ -228,3 +228,24 @@ modApi.hookFunction("CheatFactor", 10, (args, next) => {
 
   return next(args);
 })
+
+modApi.hookFunction("AsylumGGTSNewTask", 10, (args, next) => {
+  next(args);
+
+  // Notify user with browser notification
+  if (Notification.permission === "granted") {
+    new Notification("New GGTS Task", {
+      body: AsylumGGTSTask,
+      icon: "Icons/Logo.png"
+    });
+  } else if (Notification.permission !== "denied") {
+    Notification.requestPermission().then((permission) => {
+      if (permission === "granted") {
+        new Notification("New GGTS Task", {
+          body: AsylumGGTSTask,
+          icon: "Icons/Logo.png"
+        });
+      }
+    });
+  }
+})

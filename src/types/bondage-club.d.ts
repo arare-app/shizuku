@@ -1,4 +1,6 @@
 /// <reference path="../../node_modules/bc-stubs/bc/Backgrounds/Backgrounds.d.ts" />
+/// <reference path="../../node_modules/bc-stubs/bc/Screens/Character/Appearance/Appearance.d.ts" />
+/// <reference path="../../node_modules/bc-stubs/bc/Screens/Character/Wardrobe/Wardrobe.d.ts" />
 /// <reference path="../../node_modules/bc-stubs/bc/Screens/Online/ChatSearch/ChatSearch.d.ts" />
 /// <reference path="../../node_modules/bc-stubs/bc/Screens/Online/Chatroom/Chatroom.d.ts" />
 /// <reference path="../../node_modules/bc-stubs/bc/Screens/Online/Chatroom/Commands.d.ts" />

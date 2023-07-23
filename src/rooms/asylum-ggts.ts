@@ -3,17 +3,18 @@ import modApi from '../hooks/native'
 modApi.hookFunction('ChatRoomMenuBuild', 10, (args, next) => {
   next(args);
   if (ChatRoomGame != "GGTS") return;
-  ChatRoomMenuButtons.push("BCS_SetPose");
+
+  ChatRoomMenuButtons.push("BCS_DoRequired");
   return;
 })
 
 modApi.hookFunction('TextGet', 10, (args, next) => {
-  if (ChatRoomGame == "GGTS" && args[0] == "MenuBCS_SetPose") return "Set Required Pose";
+  if (ChatRoomGame == "GGTS" && args[0] == "MenuBCS_DoRequired") return "Do Required Task";
   return next(args);
 })
 
 modApi.hookFunction('DrawGetImage', 10, (args, next) => {
-  if (ChatRoomGame == "GGTS" && args[0] == "Icons/Rectangle/BCS_SetPose.png") {
+  if (ChatRoomGame == "GGTS" && args[0] == "Icons/Rectangle/BCS_DoRequired.png") {
     return next(["Icons/Poses/OverTheHead.png"]);
   }
   return next(args);
@@ -27,6 +28,7 @@ modApi.hookFunction('ChatRoomMenuClick', 10, (args, next) => {
   }
 
   switch (AsylumGGTSLastTask) {
+    // Poses
     case "PoseOverHead":
       CharacterSetActivePose(Player, "Yoked");
       return;
@@ -38,6 +40,59 @@ modApi.hookFunction('ChatRoomMenuClick', 10, (args, next) => {
       return;
     case "PoseLegsClosed":
       CharacterSetActivePose(Player, "LegsClosed");
+      return;
+    // Clothes
+    case "ClothHeels":
+      InventoryWear(Player, "Heels1", "Shoes", "#72686F", 0);
+      return;
+    case "ClothSocks":
+      if (InventoryGet(Player, "Socks") == null) {
+        InventoryWear(Player, "Socks4", "Socks", "#BCBCBC", 0);
+      }
+      if (InventoryGet(Player, "Shoes") != null) {
+        InventoryRemove(Player, "Shoes");
+      }
+      if (InventoryGet(Player, "ItemBoots") != null) {
+        InventoryRemove(Player, "ItemBoots");
+      }
+      return;
+    case "ClothBarefoot":
+      if (InventoryGet(Player, "Socks") != null) {
+        InventoryRemove(Player, "Socks");
+      }
+      if (InventoryGet(Player, "Shoes") != null) {
+        InventoryRemove(Player, "Shoes");
+      }
+      if (InventoryGet(Player, "ItemBoots") != null) {
+        InventoryRemove(Player, "ItemBoots");
+      }
+      return;
+    case "ClothUpperLowerOn":
+      if (InventoryGet(Player, "Cloth") == null) {
+        // Load the cloth from wardrobe
+        WardrobeFastLoad(Player, 0, false)
+      }
+      return;
+    case "ClothUpperLowerOff":
+      if (InventoryGet(Player, "Cloth") != null) {
+        InventoryRemove(Player, "Cloth");
+      }
+      if (InventoryGet(Player, "ClothLower") != null) {
+        InventoryRemove(Player, "ClothLower");
+      }
+      return;
+    case "ClothUnderwear":
+      if (CharacterIsNaked(Player) || !CharacterIsInUnderwear(Player)) {
+        CharacterNaked(Player);
+        InventoryWear(Player, "Bra2", "Bra", "#FFFFFF");
+        InventoryWear(Player, "Panties7", "Panties", "#DE21A7")
+      }
+      return;
+    case "ClothNaked":
+      CharacterNaked(Player);
+      return;
+    case "RestrainLegs":
+      InventoryWearRandom(Player, "ItemLegs", 0, true, true);
       return;
   }
   return next(args);

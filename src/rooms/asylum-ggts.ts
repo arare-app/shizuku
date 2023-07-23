@@ -9,13 +9,22 @@ modApi.hookFunction('ChatRoomMenuBuild', 10, (args, next) => {
 })
 
 modApi.hookFunction('TextGet', 10, (args, next) => {
-  if (ChatRoomGame == "GGTS" && args[0] == "MenuBCS_DoRequired") return "Do Required Task";
+  if (ChatRoomGame == "GGTS" && args[0] == "MenuBCS_DoRequired") {
+    if (AsylumGGTSTask?.startsWith("Pose"))
+      return "Set Required Pose";
+    else if (AsylumGGTSTask?.startsWith("Cloth"))
+      return "Set Required Clothes";
+    else if (AsylumGGTSTask?.startsWith("Activity"))
+      return "Do Required Activity";
+    else
+      return "New Task";
+  }
   return next(args);
 })
 
 modApi.hookFunction('DrawGetImage', 10, (args, next) => {
   if (ChatRoomGame == "GGTS" && args[0] == "Icons/Rectangle/BCS_DoRequired.png") {
-    return next(["Icons/Poses/OverTheHead.png"]);
+    return next(["Icons/Previews/Handheld.png"]);
   }
   return next(args);
 })
@@ -27,7 +36,35 @@ modApi.hookFunction('ChatRoomMenuClick', 10, (args, next) => {
     return next(args);
   }
 
-  switch (AsylumGGTSLastTask) {
+  if (AsylumGGTSTask == null) {
+    AsylumGGTSNewTask();
+    return;
+  }
+
+  switch (AsylumGGTSTask) {
+    // Activities
+    case "ActivityBite":
+    case "ActivityCaress":
+    case "ActivityHandGag":
+    case "ActivityKiss":
+    case "ActivityLick":
+    case "ActivityMasturbateHand":
+    case "ActivityNod":
+    case "ActivityPet":
+    case "ActivityPinch":
+    case "ActivitySpank":
+    case "ActivityTickle":
+    case "ActivityWiggle": {
+      const activity = ActivityFemale3DCG.find((item) => item.Name === AsylumGGTSTask.substr(8));
+      const Groups = (activity.TargetSelf === true ? activity.Target : activity.TargetSelf) ?? [];
+      const Group = AssetGroupGet("Female3DCG", CommonRandomItemFromList(null, Groups))
+      if (!activity || Group == null) {
+        ChatRoomSendLocal("Activity group not found: " + activity);
+        return;
+      }
+      ActivityRun(Player, AsylumGGTSTaskTarget ?? Player, Group, { Activity: activity }, true);
+      return;
+    }
     // Poses
     case "PoseOverHead":
       CharacterSetActivePose(Player, "Yoked");
@@ -103,7 +140,7 @@ modApi.hookFunction("ChatRoomSendChat", 10, (args, next) => {
 
   let msg = ElementValue("InputChat").trim();
   if (msg != "") {
-    if (AsylumGGTSLastTask == "NoTalking") {
+    if (AsylumGGTSTask == "NoTalking") {
       msg = "*" + msg;
     } else {
       return next(args);
@@ -111,7 +148,7 @@ modApi.hookFunction("ChatRoomSendChat", 10, (args, next) => {
   }
 
   const Level = AsylumGGTSGetLevel(Player);
-  switch(AsylumGGTSLastTask) {
+  switch(AsylumGGTSTask) {
     case "QueryWhatIsGGTS":
       msg = "Good Girl Training System"
       break;

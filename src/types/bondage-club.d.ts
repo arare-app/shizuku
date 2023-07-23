@@ -1,3 +1,4 @@
+/// <reference path="../../node_modules/bc-stubs/bc/Assets/Female3DCG/Female3DCG.d.ts" />
 /// <reference path="../../node_modules/bc-stubs/bc/Backgrounds/Backgrounds.d.ts" />
 /// <reference path="../../node_modules/bc-stubs/bc/Screens/Character/Appearance/Appearance.d.ts" />
 /// <reference path="../../node_modules/bc-stubs/bc/Screens/Character/Wardrobe/Wardrobe.d.ts" />
@@ -50,5 +51,6 @@
 /// <reference path="../../node_modules/bc-stubs/bc/Scripts/Drawing.d.ts" />
 /// <reference path="../../node_modules/bc-stubs/bc/Scripts/PortalLink.d.ts" />
 /// <reference path="../../node_modules/bc-stubs/bc/Scripts/VibratorMode.d.ts" />
+/// <reference path="../../node_modules/bc-stubs/bc/Typedef.d.ts" />
 
 export {};

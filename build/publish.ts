@@ -3,8 +3,12 @@ import { execSync as exec } from 'child_process';
 import { cpSync, statSync, rmSync } from 'fs';
 
 // Remove the old build
-if (statSync('dist').isDirectory()) {
-  rmSync('dist', { recursive: true });
+try {
+  if (statSync('dist').isDirectory()) {
+    rmSync('dist', { recursive: true });
+  }
+} catch (e) {
+  // Ignore
 }
 
 // Build the new one

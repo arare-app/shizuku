@@ -1,6 +1,6 @@
 import { execSync as exec } from 'child_process';
 
-import { statSync, rmSync } from 'fs';
+import { cpSync, statSync, rmSync } from 'fs';
 
 // Remove the old build
 if (statSync('dist').isDirectory()) {
@@ -9,6 +9,11 @@ if (statSync('dist').isDirectory()) {
 
 // Build the new one
 exec('yarn run build');
+
+// copy `index.html` to `dist`
+cpSync('index.html', 'dist/index.html');
+// copy `bcscripts.user.js` to `dist`
+cpSync('bcscripts.user.js', 'dist/bcscripts.user.js');
 
 const option = { cwd: 'dist' }
 // Git init

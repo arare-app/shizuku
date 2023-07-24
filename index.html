@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bondage Club Scripts</title>
+  </head>
+  <body>
+    <h1>Bondage Club Scripts</h1>
+    <hr>
+    <p>
+      Bondage Club Scripts is a mod for <a href="https://www.patreon.com/bondageprojects">Bondage Club</a> that adds some cheat-oriented features to the game.
+    </p>
+
+    <h2>Install</h2>
+    <p>
+      You can install the mod by using <a href="https://www.tampermonkey.net/">Tempermonkey</a> or the manual bookmark method.
+    </p>
+    <strong>NOTE:</strong>
+    <br>
+    <p>
+      Also, as this scripts requires <a href="https://jomshir98.github.io/bondage-club-extended/">BCX</a> load first, you need to install it too.
+    </p>
+    <h3>1) Using Tempermonkey</h3>
+    <p>
+      Make sure you have Tempermonkey installed and enabled in your browser. Then, click <a href="https://maikolib.github.io/bcscripts.user.js">here</a> to install the mod.
+    </p>
+    <h3>2) Manual bookmark method</h3>
+    <p>
+      Create a new bookmark in your browser and paste the following code in the URL field:
+    </p>
+    <pre>
+      javascript:(function(){if(window.MaikoBCScriptLoaded===undefined){let n=document.createElement("script");n.setAttribute("language","JavaScript");n.setAttribute("crossorigin","anonymous");n.setAttribute("src","https://maikolib.github.io/bcscripts/index.global.js?_=%22+Date.now());n.onload=()=%3En.remove();document.head.appendChild(n);}})();
+    </pre>
+  </body>
+</html>

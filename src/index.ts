@@ -1,5 +1,5 @@
 (async () => {
-  const version = '0.0.1';
+  const version = '0.0.2';
   if (window.MaikoBCScriptLoaded !== true) {
     while (!window.bcModSdk) {
       await new Promise(resolve => setTimeout(resolve, 100));
@@ -9,6 +9,10 @@
 
     await import('./entry');
 
+    while (ServerBeep) {
+      // This means the BCX extension is just loaded, we should wait for the message disapear.
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
     ServerBeep = {
       Message: `BCS Loaded, Version: ${version}`,
       Timer: CommonTime() + 3000,

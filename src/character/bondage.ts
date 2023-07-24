@@ -3,7 +3,7 @@ import { iconClose } from "src/resources/icons";
 
 modApi.hookFunction('DialogMenuButtonBuild', 10, (args, next) => {
   next(args);
-  DialogMenuButton.push(Bondage.isRestrained() ? "BCS_RemoveAll" : "BCS_RandomBondage");
+  DialogMenuButton.push(Bondage.isRestrained() ? "BCS_RemoveAll" : "BCS_RandomBondage" as any);
   return;
 })
 

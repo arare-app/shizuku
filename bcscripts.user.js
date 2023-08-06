@@ -16,7 +16,7 @@
 // eslint-disable-next-line no-restricted-globals
 setTimeout(
 	function () {
-		if (window.BCX_Loaded === undefined) {
+		if (typeof window.MaikoBCScriptLoaded === 'undefined') {
 			const n = document.createElement("script");
 			n.setAttribute("language", "JavaScript");
 			n.setAttribute("crossorigin", "anonymous");

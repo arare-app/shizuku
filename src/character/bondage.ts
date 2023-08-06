@@ -39,12 +39,15 @@ modApi.hookFunction('DialogMenuButtonClick', 10, (args, next) => {
 
 export namespace Bondage {
   export function isRestrained() {
+    if (!CurrentCharacter) return false
     return CurrentCharacter.IsRestrained();
   }
   export function randomBondage() {
+    if (!CurrentCharacter) return
     CharacterFullRandomRestrain(CurrentCharacter, (['FEW', 'LOT', 'ALL'] as const)[Math.floor(Math.random() * 3)]);
   }
   export function releaseAll() {
+    if (!CurrentCharacter) return
     CharacterReleaseTotal(CurrentCharacter)
   }
 }

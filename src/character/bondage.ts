@@ -45,7 +45,7 @@ export namespace Bondage {
     CharacterFullRandomRestrain(CurrentCharacter, (['FEW', 'LOT', 'ALL'] as const)[Math.floor(Math.random() * 3)]);
   }
   export function releaseAll() {
-    CharacterRelease(CurrentCharacter)
+    CharacterReleaseTotal(CurrentCharacter)
   }
 }
 

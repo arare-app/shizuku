@@ -8,7 +8,7 @@
 
     await import('./entry');
 
-    while (ServerBeep) {
+    while (ServerBeep?.Timer > CommonTime()) {
       // This means the BCX extension is just loaded, we should wait for the message disapear.
       await new Promise(resolve => setTimeout(resolve, 1000));
     }

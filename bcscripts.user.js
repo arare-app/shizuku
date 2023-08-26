@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         bcscripts - Bondage Club Scripts by MaikoTan
 // @namespace    BCS
-// @version      0.0.1
+// @version      0.0.3
 // @description  Loader of MaikoTan's bcscripts mod
 // @author       MaikoTan
 // @include      /^https:\/\/(www\.)?bondageprojects\.elementfx\.com\/R\d+\/(BondageClub|\d+)(\/((index|\d+)\.html)?)?$/

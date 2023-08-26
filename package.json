@@ -1,6 +1,6 @@
 {
   "name": "bcscripts",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Scripts for Bondage Club",
   "main": "dist/index.global.js",
   "typings": "dist/index.d.ts",

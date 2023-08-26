@@ -3,7 +3,19 @@ import modApi from '../hooks/native'
 declare global {
   interface Window {
     DialogShibariRandomBondage: () => void;
+    DialogReleaseNoLock: (character: Character) => void;
+    DialogReleaseTotal: (character: Character) => void;
   }
+}
+
+window.DialogShibariRandomBondage ??= function () {
+  ShibariRandomBondage(Player, Math.floor(Math.random() * 6));
+}
+window.DialogReleaseNoLock ??= function (character: Character) {
+  CharacterReleaseNoLock(character);
+}
+window.DialogReleaseTotal ??= function (character: Character) {
+  CharacterReleaseTotal(character);
 }
 
 modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
@@ -21,6 +33,26 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
       Group: null,
       Prerequisite: null,
       Result: "(You can restrain or release yourself with a single click.)",
+      Trait: null,
+    },
+    {
+      Stage: "ShizukuDialogCheatQuickBondageMenu",
+      Option: "(Remove Restrains Not Locked)",
+      Function: "DialogReleaseNoLock(CurrentCharacter)",
+      NextStage: "0",
+      Group: null,
+      Prerequisite: "CurrentCharacter.IsRestrained()",
+      Result: "(You have been released except for locked items.)",
+      Trait: null,
+    },
+    {
+      Stage: "ShizukuDialogCheatQuickBondageMenu",
+      Option: "(Remove All Restrains Except Collars)",
+      Function: "DialogReleaseTotal(CurrentCharacter)",
+      NextStage: "0",
+      Group: null,
+      Prerequisite: "CurrentCharacter.IsRestrained()",
+      Result: "(You have been released except for slave collars.)",
       Trait: null,
     },
     {
@@ -64,12 +96,6 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
       Trait: null,
     },
   ];
-
-  if (!window.DialogShibariRandomBondage) {
-    window.DialogShibariRandomBondage = function () {
-      ShibariRandomBondage(Player, Math.floor(Math.random() * 6));
-    }
-  }
   const lastIndex = args[0].Dialog.findIndex((dialog) => dialog.Stage === '0' && dialog.Option === '(Leave this menu.)');
   for (let i = 0; i < customDialog.length; i++) {
     if (Player.Dialog.includes(customDialog[i])) continue;

@@ -37,7 +37,7 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
     {
       Stage: "ShizukuDialogGGTSHelperMenu",
       Option: "(New Task)",
-      Function: "DialogLeave()",
+      Function: "DialogShizukuGGTSDoRequiredTask()",
       NextStage: "0",
       Group: null,
       Prerequisite: "DialogShizukuGGTSNoCurrentTask()",
@@ -47,7 +47,7 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
     {
       Stage: "ShizukuDialogGGTSHelperMenu",
       Option: "(Set Required Pose)",
-      Function: "DialogLeave()",
+      Function: "DialogShizukuGGTSDoRequiredTask()",
       NextStage: "0",
       Group: null,
       Prerequisite: "DialogShizukuGGTSRequiresPose()",
@@ -57,7 +57,7 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
     {
       Stage: "ShizukuDialogGGTSHelperMenu",
       Option: "(Set Required Clothes)",
-      Function: "DialogLeave()",
+      Function: "DialogShizukuGGTSDoRequiredTask()",
       NextStage: "0",
       Group: null,
       Prerequisite: "DialogShizukuGGTSRequiresCloth()",
@@ -67,7 +67,7 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
     {
       Stage: "ShizukuDialogGGTSHelperMenu",
       Option: "(Do Required Activity)",
-      Function: "DialogLeave()",
+      Function: "DialogShizukuGGTSDoRequiredTask()",
       NextStage: "0",
       Group: null,
       Prerequisite: "DialogShizukuGGTSRequiresActivity()",
@@ -77,7 +77,7 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
     {
       Stage: "ShizukuDialogGGTSHelperMenu",
       Option: "(Restrain Legs)",
-      Function: "DialogLeave()",
+      Function: "DialogShizukuGGTSDoRequiredTask()",
       NextStage: "0",
       Group: null,
       Prerequisite: "DialogShizukuGGTSRequiresRestrainLegs()",
@@ -87,7 +87,7 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
     {
       Stage: "ShizukuDialogGGTSHelperMenu",
       Option: "(Wear Required Items)",
-      Function: "DialogLeave()",
+      Function: "DialogShizukuGGTSDoRequiredTask()",
       NextStage: "0",
       Group: null,
       Prerequisite: "DialogShizukuGGTSRequiresItems()",

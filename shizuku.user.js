@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         shizuku - Bondage Club Scripts by MaikoTan
 // @namespace    Shizuku
-// @version      0.0.3
+// @version      0.0.4
 // @description  Loader of MaikoTan's Shizuku mod
 // @author       MaikoTan
 // @include      /^https:\/\/(www\.)?bondageprojects\.elementfx\.com\/R\d+\/(BondageClub|\d+)(\/((index|\d+)\.html)?)?$/

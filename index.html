@@ -3,12 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        max-width: 900px;
+        margin: 40px auto;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
+      pre {
+        background-color: #eee;
+        padding: 10px;
+        border-radius: 5px;
+        word-break: break-all;
+        white-space: pre-wrap;
+      }
+      h1 {
+        text-align: center;
+      }
+    </style>
     <title>Shizuku</title>
   </head>
   <body>
     <h1>Shizuku</h1>
     <hr>
-    <p>
+    <p align="center">
       Shizuku is a mod for <a href="https://www.patreon.com/bondageprojects">Bondage Club</a> that adds some cheat-oriented features to the game.
     </p>
 
@@ -29,8 +46,6 @@
     <p>
       Create a new bookmark in your browser and paste the following code in the URL field:
     </p>
-    <pre>
-      javascript:(function(){if(window.MaikoScriptShizukuLoaded===undefined){let n=document.createElement("script");n.setAttribute("language","JavaScript");n.setAttribute("crossorigin","anonymous");n.setAttribute("src","https://maikolib.github.io/shizuku/index.global.js?_=%22+Date.now());n.onload=()=%3En.remove();document.head.appendChild(n);}})();
-    </pre>
+    <pre>javascript:(function(){if(window.MaikoScriptShizukuLoaded===undefined){let n=document.createElement("script");n.setAttribute("language","JavaScript");n.setAttribute("crossorigin","anonymous");n.setAttribute("src","https://maikolib.github.io/shizuku/index.global.js?_=%22+Date.now());n.onload=()=%3En.remove();document.head.appendChild(n);}})();</pre>
   </body>
 </html>

@@ -17,7 +17,7 @@
 setTimeout(
 	function () {
 		if (typeof window.MaikoScriptShizukuLoaded === 'undefined') {
-			const n = document.createElement("script");
+			var n = document.createElement("script");
 			n.setAttribute("language", "JavaScript");
 			n.setAttribute("crossorigin", "anonymous");
 			n.setAttribute("src", "https://maikolib.github.io/shizuku/index.global.js?_=" + Date.now());

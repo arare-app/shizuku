@@ -1,5 +1,9 @@
 import modApi from '../hooks/native'
 
+export function isGGTS() {
+  return (CurrentModule == "Online") && (CurrentScreen == "ChatRoom") && (ChatRoomGame == "GGTS") && (ChatRoomSpace === "Asylum");
+}
+
 modApi.hookFunction('ChatRoomMenuBuild', 10, (args, next) => {
   next(args);
   if (ChatRoomGame != "GGTS") return;

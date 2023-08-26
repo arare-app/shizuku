@@ -5,9 +5,12 @@ declare global {
     bcModSdk: ModSDKGlobalAPI
   }
 }
+
+export const version = "0.0.3"
+
 export default window.bcModSdk.registerMod({
   name: "Shizuku",
-  version: "0.0.3",
+  version,
   fullName: "Shizuku Bondage Club Mod",
   repository: 'https://github.com/maikolib/shizuku',
 })

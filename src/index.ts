@@ -1,5 +1,4 @@
 (async () => {
-  const version = '0.0.3';
   if (window.MaikoScriptShizukuLoaded !== true) {
     while (!window.bcModSdk) {
       await new Promise(resolve => setTimeout(resolve, 100));
@@ -14,7 +13,7 @@
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
     ServerBeep = {
-      Message: `Shizuku Loaded, Version: ${version}`,
+      Message: `Shizuku Loaded, Version: ${await import('./hooks/native').then(m => m.version)}`,
       Timer: CommonTime() + 3000,
     }
   } else {

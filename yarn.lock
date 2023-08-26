@@ -471,21 +471,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bcscripts@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "bcscripts@workspace:."
-  dependencies:
-    "@types/node": ^20.4.3
-    bc-stubs: "github:bananarama92/BC-stubs"
-    bondage-club-mod-sdk: ^1.1.0
-    esbuild-register: ^3.4.2
-    serve: ^14.2.0
-    socket.io-client: ^4.7.1
-    tsup: ^7.1.0
-    typescript: ^5.1.6
-  languageName: unknown
-  linkType: soft
-
 "binary-extensions@npm:^2.0.0":
   version: 2.2.0
   resolution: "binary-extensions@npm:2.2.0"
@@ -2139,6 +2124,21 @@ __metadata:
   checksum: 1a2bcae50de99034fcd92ad4212d8e01eedf52c7ec7830eedcf886622804fe36884278f2be8be0ea5fde3fd1c23911643a4e0f726c8685b61871c8908af01222
   languageName: node
   linkType: hard
+
+"shizuku@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "shizuku@workspace:."
+  dependencies:
+    "@types/node": ^20.4.3
+    bc-stubs: "github:bananarama92/BC-stubs"
+    bondage-club-mod-sdk: ^1.1.0
+    esbuild-register: ^3.4.2
+    serve: ^14.2.0
+    socket.io-client: ^4.7.1
+    tsup: ^7.1.0
+    typescript: ^5.1.6
+  languageName: unknown
+  linkType: soft
 
 "signal-exit@npm:^3.0.3, signal-exit@npm:^3.0.7":
   version: 3.0.7

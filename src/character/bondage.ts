@@ -21,8 +21,8 @@ window.DialogReleaseTotal ??= function (character: Character) {
 modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
   next(args);
 
-  // Only allow when player is free
-  if (!args[0].IsPlayer() || !Player.CanInteract()) return;
+  // Only add to player dialog
+  if (!args[0].IsPlayer()) return;
 
   const customDialog = [
     {

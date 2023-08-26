@@ -1,55 +1,78 @@
 import modApi from '../hooks/native'
-import { iconClose } from "src/resources/icons";
 
-modApi.hookFunction('DialogMenuButtonBuild', 10, (args, next) => {
-  next(args);
-  DialogMenuButton.push(Bondage.isRestrained() ? "BCS_RemoveAll" : "BCS_RandomBondage" as any);
-  return;
-})
-
-modApi.hookFunction('DialogFindPlayer', 10, (args, next) => {
-  if (args[0] == "BCS_RemoveAll") {
-    return "Remove All Restrains";
-  }
-  if (args[0] == "BCS_RandomBondage") {
-    return "Random Bondage";
-  }
-  return next(args);
-})
-
-modApi.hookFunction('DrawGetImage', 10, (args, next) => {
-  if (args[0] == "Icons/BCS_RemoveAll.png") {
-    return next([iconClose]);
-  }
-  if (args[0] == "Icons/BCS_RandomBondage.png") {
-    return next(["Icons/Kidnap.png"]);
-  }
-  return next(args);
-})
-
-modApi.hookFunction('DialogMenuButtonClick', 10, (args, next) => {
-  if (["colorExpression", "colorItem", "extended", "tighten"].includes(DialogMenuMode)) return false;
-  if (MouseIn(1885 - (DialogMenuButton.length - 1) * 110, 15, 90, 90)) {
-    Bondage.isRestrained() ? Bondage.releaseAll() : Bondage.randomBondage();
-    return true;
-  }
-
-  return next(args);
-})
-
-export namespace Bondage {
-  export function isRestrained() {
-    if (!CurrentCharacter) return false
-    return CurrentCharacter.IsRestrained();
-  }
-  export function randomBondage() {
-    if (!CurrentCharacter) return
-    CharacterFullRandomRestrain(CurrentCharacter, (['FEW', 'LOT', 'ALL'] as const)[Math.floor(Math.random() * 3)]);
-  }
-  export function releaseAll() {
-    if (!CurrentCharacter) return
-    CharacterReleaseTotal(CurrentCharacter)
+declare global {
+  interface Window {
+    DialogShibariRandomBondage: () => void;
   }
 }
 
-window.BCSDialogShowMenu = false;
+modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
+  next(args);
+
+  // Only allow when player is free
+  if (!args[0].IsPlayer() || !Player.CanInteract()) return;
+
+  const customDialog = [
+    {
+      Stage: "0",
+      Option: "(Cheat: Quick Bondage Menu)",
+      Function: null,
+      NextStage: "BCSDialogCheatQuickBondageMenu",
+      Group: null,
+      Prerequisite: null,
+      Result: "(You can restrain or release yourself with a single click.)",
+      Trait: null,
+    },
+    {
+      Stage: "BCSDialogCheatQuickBondageMenu",
+      Option: "(Remove All Restrains)",
+      Function: "DialogRelease(CurrentCharacter)",
+      NextStage: "0",
+      Group: null,
+      Prerequisite: "CurrentCharacter.IsRestrained()",
+      Result: "(You have been released.)",
+      Trait: null,
+    },
+    {
+      Stage: "BCSDialogCheatQuickBondageMenu",
+      Option: "(Apply Random Bondage)",
+      Function: "DialogFullRandomRestrain(CurrentCharacter)",
+      NextStage: "0",
+      Group: null,
+      Prerequisite: "!CurrentCharacter.IsRestrained()",
+      Result: "(You have been restrained.)",
+      Trait: null,
+    },
+    {
+      Stage: "BCSDialogCheatQuickBondageMenu",
+      Option: "(Apply Random Shibari)",
+      Function: "DialogShibariRandomBondage(CurrentCharacter)",
+      NextStage: "0",
+      Group: null,
+      Prerequisite: "!CurrentCharacter.IsRestrained()",
+      Result: "(You have been restrained with Hemp Rope.)",
+      Trait: null,
+    },
+    {
+      Stage: "BCSDialogCheatQuickBondageMenu",
+      Option: "(Back to main menu.)",
+      Function: null,
+      NextStage: "0",
+      Group: null,
+      Prerequisite: null,
+      Result: "(Main menu.)",
+      Trait: null,
+    },
+  ];
+
+  if (!window.DialogShibariRandomBondage) {
+    window.DialogShibariRandomBondage = function () {
+      ShibariRandomBondage(Player, Math.floor(Math.random() * 6));
+    }
+  }
+  const lastIndex = args[0].Dialog.findIndex((dialog) => dialog.Stage === '0' && dialog.Option === '(Leave this menu.)');
+  for (let i = 0; i < customDialog.length; i++) {
+    if (Player.Dialog.includes(customDialog[i])) continue;
+    args[0].Dialog.splice(lastIndex + i, 0, customDialog[i]);
+  }
+});

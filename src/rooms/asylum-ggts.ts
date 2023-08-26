@@ -8,12 +8,12 @@ modApi.hookFunction('ChatRoomMenuBuild', 10, (args, next) => {
   next(args);
   if (ChatRoomGame != "GGTS") return;
 
-  ChatRoomMenuButtons.push("BCS_DoRequired");
+  ChatRoomMenuButtons.push("Shizuku_DoRequired");
   return;
 })
 
 modApi.hookFunction('TextGet', 10, (args, next) => {
-  if (ChatRoomGame == "GGTS" && args[0] == "MenuBCS_DoRequired") {
+  if (ChatRoomGame == "GGTS" && args[0] == "MenuShizuku_DoRequired") {
     if (AsylumGGTSTask?.startsWith("Pose"))
       return "Set Required Pose";
     else if (AsylumGGTSTask?.startsWith("Cloth"))
@@ -27,7 +27,7 @@ modApi.hookFunction('TextGet', 10, (args, next) => {
 })
 
 modApi.hookFunction('DrawGetImage', 10, (args, next) => {
-  if (ChatRoomGame == "GGTS" && args[0] == "Icons/Rectangle/BCS_DoRequired.png") {
+  if (ChatRoomGame == "GGTS" && args[0] == "Icons/Rectangle/Shizuku_DoRequired.png") {
     return next(["Icons/Previews/Handheld.png"]);
   }
   return next(args);

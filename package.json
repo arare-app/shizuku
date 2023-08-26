@@ -1,7 +1,7 @@
 {
-  "name": "bcscripts",
+  "name": "shizuku",
   "version": "0.0.3",
-  "description": "Scripts for Bondage Club",
+  "description": "Maiko preferred scripts for Bondage Club",
   "main": "dist/index.global.js",
   "typings": "dist/index.d.ts",
   "scripts": {

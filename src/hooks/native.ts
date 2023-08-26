@@ -6,8 +6,8 @@ declare global {
   }
 }
 export default window.bcModSdk.registerMod({
-  name: "MaikoBCScript",
-  version: "0.0.1",
-  fullName: "Bondage Club Scripts",
-  repository: 'https://github.com/maikolib/bcscripts',
+  name: "Shizuku",
+  version: "0.0.3",
+  fullName: "Shizuku Bondage Club Mod",
+  repository: 'https://github.com/maikolib/shizuku',
 })

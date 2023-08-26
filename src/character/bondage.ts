@@ -17,14 +17,14 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
       Stage: "0",
       Option: "(Cheat: Quick Bondage Menu)",
       Function: null,
-      NextStage: "BCSDialogCheatQuickBondageMenu",
+      NextStage: "ShizukuDialogCheatQuickBondageMenu",
       Group: null,
       Prerequisite: null,
       Result: "(You can restrain or release yourself with a single click.)",
       Trait: null,
     },
     {
-      Stage: "BCSDialogCheatQuickBondageMenu",
+      Stage: "ShizukuDialogCheatQuickBondageMenu",
       Option: "(Remove All Restrains)",
       Function: "DialogRelease(CurrentCharacter)",
       NextStage: "0",
@@ -34,7 +34,7 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
       Trait: null,
     },
     {
-      Stage: "BCSDialogCheatQuickBondageMenu",
+      Stage: "ShizukuDialogCheatQuickBondageMenu",
       Option: "(Apply Random Bondage)",
       Function: "DialogFullRandomRestrain(CurrentCharacter)",
       NextStage: "0",
@@ -44,7 +44,7 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
       Trait: null,
     },
     {
-      Stage: "BCSDialogCheatQuickBondageMenu",
+      Stage: "ShizukuDialogCheatQuickBondageMenu",
       Option: "(Apply Random Shibari)",
       Function: "DialogShibariRandomBondage(CurrentCharacter)",
       NextStage: "0",
@@ -54,7 +54,7 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
       Trait: null,
     },
     {
-      Stage: "BCSDialogCheatQuickBondageMenu",
+      Stage: "ShizukuDialogCheatQuickBondageMenu",
       Option: "(Back to main menu.)",
       Function: null,
       NextStage: "0",

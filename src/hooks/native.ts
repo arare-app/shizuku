@@ -6,7 +6,7 @@ declare global {
   }
 }
 
-export const version = "0.0.6"
+export const version = "0.0.7"
 
 export default window.bcModSdk.registerMod({
   name: "Shizuku",

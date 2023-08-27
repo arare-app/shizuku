@@ -3,19 +3,19 @@ import modApi from '../hooks/native'
 declare global {
   interface Window {
     DialogShibariRandomBondage: () => void;
-    DialogReleaseNoLock: (character: Character) => void;
-    DialogReleaseTotal: (character: Character) => void;
+    DialogReleaseNoLock: () => void;
+    DialogReleaseTotal: () => void;
   }
 }
 
 window.DialogShibariRandomBondage ??= function () {
   ShibariRandomBondage(Player, Math.floor(Math.random() * 6));
 }
-window.DialogReleaseNoLock ??= function (character: Character) {
-  CharacterReleaseNoLock(character);
+window.DialogReleaseNoLock ??= function () {
+  CharacterReleaseNoLock(CurrentCharacter);
 }
-window.DialogReleaseTotal ??= function (character: Character) {
-  CharacterReleaseTotal(character);
+window.DialogReleaseTotal ??= function () {
+  CharacterReleaseTotal(CurrentCharacter);
 }
 
 modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
@@ -24,7 +24,7 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
   // Only add to player dialog
   if (!args[0].IsPlayer()) return;
 
-  const customDialog = [
+  const customDialog: DialogLine[] = [
     {
       Stage: "0",
       Option: "(Cheat: Quick Bondage Menu)",
@@ -38,7 +38,7 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
     {
       Stage: "ShizukuDialogCheatQuickBondageMenu",
       Option: "(Remove Restrains Not Locked)",
-      Function: "DialogReleaseNoLock(CurrentCharacter)",
+      Function: "DialogReleaseNoLock()",
       NextStage: "0",
       Group: null,
       Prerequisite: "CurrentCharacter.IsRestrained()",
@@ -48,7 +48,7 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
     {
       Stage: "ShizukuDialogCheatQuickBondageMenu",
       Option: "(Remove All Restrains Except Collars)",
-      Function: "DialogReleaseTotal(CurrentCharacter)",
+      Function: "DialogReleaseTotal()",
       NextStage: "0",
       Group: null,
       Prerequisite: "CurrentCharacter.IsRestrained()",
@@ -58,7 +58,7 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
     {
       Stage: "ShizukuDialogCheatQuickBondageMenu",
       Option: "(Remove All Restrains)",
-      Function: "DialogRelease(CurrentCharacter)",
+      Function: "DialogRelease()",
       NextStage: "0",
       Group: null,
       Prerequisite: "CurrentCharacter.IsRestrained()",
@@ -68,7 +68,7 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
     {
       Stage: "ShizukuDialogCheatQuickBondageMenu",
       Option: "(Apply Random Bondage)",
-      Function: "DialogFullRandomRestrain(CurrentCharacter)",
+      Function: "DialogFullRandomRestrain()",
       NextStage: "0",
       Group: null,
       Prerequisite: "!CurrentCharacter.IsRestrained()",
@@ -78,7 +78,7 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
     {
       Stage: "ShizukuDialogCheatQuickBondageMenu",
       Option: "(Apply Random Shibari)",
-      Function: "DialogShibariRandomBondage(CurrentCharacter)",
+      Function: "DialogShibariRandomBondage()",
       NextStage: "0",
       Group: null,
       Prerequisite: "!CurrentCharacter.IsRestrained()",

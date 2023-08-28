@@ -1,4 +1,4 @@
-import { ModSDKGlobalAPI } from "bondage-club-mod-sdk"
+import { ModSDKGlobalAPI } from 'bondage-club-mod-sdk'
 
 declare global {
   interface Window {
@@ -6,11 +6,11 @@ declare global {
   }
 }
 
-export const version = "0.0.7"
+export const version = '0.0.7'
 
 export default window.bcModSdk.registerMod({
-  name: "Shizuku",
+  name: 'Shizuku',
   version,
-  fullName: "Shizuku Bondage Club Mod",
+  fullName: 'Shizuku Bondage Club Mod',
   repository: 'https://github.com/maikolib/shizuku',
 })

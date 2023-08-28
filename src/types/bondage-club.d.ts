@@ -53,4 +53,4 @@
 /// <reference path="../../node_modules/bc-stubs/bc/Scripts/VibratorMode.d.ts" />
 /// <reference path="../../node_modules/bc-stubs/bc/Typedef.d.ts" />
 
-export {};
+export {}

@@ -1,7 +1,7 @@
 declare global {
   interface Window {
-    MaikoScriptShizukuLoaded?: boolean;
+    MaikoScriptShizukuLoaded?: boolean
   }
 }
 
-export {};
+export {}

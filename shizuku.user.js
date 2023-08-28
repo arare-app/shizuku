@@ -14,16 +14,13 @@
 // ==/UserScript==
 
 // eslint-disable-next-line no-restricted-globals
-setTimeout(
-	function () {
-		if (typeof window.MaikoScriptShizukuLoaded === 'undefined') {
-			var n = document.createElement("script");
-			n.setAttribute("language", "JavaScript");
-			n.setAttribute("crossorigin", "anonymous");
-			n.setAttribute("src", "https://maikolib.github.io/shizuku/index.global.js?_=" + Date.now());
-			n.onload = () => n.remove();
-			document.head.appendChild(n);
-		}
-	},
-	2000
-);
+setTimeout(function () {
+  if (typeof window.MaikoScriptShizukuLoaded === 'undefined') {
+    var n = document.createElement('script')
+    n.setAttribute('language', 'JavaScript')
+    n.setAttribute('crossorigin', 'anonymous')
+    n.setAttribute('src', 'https://maikolib.github.io/shizuku/index.global.js?_=' + Date.now())
+    n.onload = () => n.remove()
+    document.head.appendChild(n)
+  }
+}, 2000)

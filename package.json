@@ -2,6 +2,7 @@
   "name": "shizuku",
   "version": "0.0.7",
   "description": "Maiko preferred scripts for Bondage Club",
+  "license": "AGPL-3.0",
   "main": "dist/index.global.js",
   "typings": "dist/index.d.ts",
   "scripts": {

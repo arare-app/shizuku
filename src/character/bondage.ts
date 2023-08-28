@@ -18,12 +18,7 @@ window.DialogReleaseTotal ??= function () {
   CharacterReleaseTotal(CurrentCharacter);
 }
 
-modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
-  next(args);
-
-  // Only add to player dialog
-  if (!args[0].IsPlayer()) return;
-
+function addCustomDialogToPlayer() {
   const customDialog: DialogLine[] = [
     {
       Stage: "0",
@@ -96,9 +91,31 @@ modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
       Trait: null,
     },
   ];
-  const lastIndex = args[0].Dialog.findIndex((dialog) => dialog.Stage === '0' && dialog.Option === '(Leave this menu.)');
+  const lastIndex = Player.Dialog.findIndex((dialog) => dialog.Stage === '0' && dialog.Option === '(Leave this menu.)');
   for (let i = 0; i < customDialog.length; i++) {
     if (Player.Dialog.includes(customDialog[i])) continue;
-    args[0].Dialog.splice(lastIndex + i, 0, customDialog[i]);
+    Player.Dialog.splice(lastIndex + i, 0, customDialog[i]);
   }
-});
+}
+
+function init() {
+  if (window?.Player?.Dialog?.length) {
+    // Add to player dialog immediately because we're too late.
+    addCustomDialogToPlayer();
+  } else {
+    // Add to player dialog when it's ready
+    const dispose = modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
+      next(args);
+    
+      // Early return if the current character is not the player.
+      if (!args[0].IsPlayer()) return;
+
+      addCustomDialogToPlayer();
+
+      // Dispose of this hook
+      dispose();
+    });
+  }
+}
+
+init();

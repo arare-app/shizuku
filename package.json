@@ -11,12 +11,18 @@
     "pub": "yarn node -r esbuild-register build/publish.ts",
     "bump": "yarn node -r esbuild-register build/version.ts",
     "serve": "serve -l 3000 --cors",
-    "format": "prettier --write \"src/**/*.ts\" \"build/**/*\" \"*.{json,md,html,yml,js}\""
+    "lint": "eslint . && prettier --check \"src/**/*.ts\" \"build/**/*\" \"*.{json,md,html,yml,js}\"",
+    "format": "prettier --write \"src/**/*.ts\" \"build/**/*\" \".github/**/*\" \"*.{json,md,html,yml,js}\""
   },
   "devDependencies": {
     "@types/node": "^20.4.3",
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@typescript-eslint/parser": "^6.4.1",
     "bc-stubs": "github:bananarama92/BC-stubs",
     "esbuild-register": "^3.4.2",
+    "eslint": "^8.48.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-prettier": "^5.0.0",
     "prettier": "^3.0.2",
     "serve": "^14.2.0",
     "socket.io-client": "^4.7.1",

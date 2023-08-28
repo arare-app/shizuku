@@ -5,9 +5,10 @@
     "lib": ["DOM", "ES2022"],
     "baseUrl": ".",
     "outDir": "dist",
+    "allowJs": true,
     // "skipLibCheck": true,
     // "skipDefaultLibCheck": true,
     "types": ["./src/types/bondage-club.d.ts"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "./shizuku.user.js"]
 }

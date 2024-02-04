@@ -12,5 +12,5 @@ export default window.bcModSdk.registerMod({
   name: 'Shizuku',
   version,
   fullName: 'Shizuku Bondage Club Mod',
-  repository: 'https://github.com/maikolib/shizuku',
+  repository: 'https://github.com/arare-app/shizuku',
 })

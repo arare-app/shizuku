@@ -282,15 +282,21 @@ function ggtsDoRequired() {
       wearFuturisticRestraints('ItemBoots', 'FuturisticHeels')
       break
     case 'ItemMouthFuturisticBallGag':
-      wearFuturisticRestraints('ItemMouth', 'FuturisticBallGag')
+      if (InventoryGet(Player, 'ItemMouth') == null) {
+        wearFuturisticRestraints('ItemMouth', 'FuturisticHarnessBallGag')
+      } else if (InventoryGet(Player, 'ItemMouth2') == null) {
+        wearFuturisticRestraints('ItemMouth2', 'FuturisticHarnessBallGag')
+      } else if (InventoryGet(Player, 'ItemMouth3') == null) {
+        wearFuturisticRestraints('ItemMouth3', 'FuturisticHarnessBallGag')
+      }
       break
     case 'ItemMouthFuturisticPanelGag':
       if (InventoryGet(Player, 'ItemMouth') == null) {
-        wearFuturisticRestraints('ItemMouth', 'FuturisticPanelGag')
+        wearFuturisticRestraints('ItemMouth', 'FuturisticHarnessPanelGag')
       } else if (InventoryGet(Player, 'ItemMouth2') == null) {
-        wearFuturisticRestraints('ItemMouth2', 'FuturisticPanelGag')
+        wearFuturisticRestraints('ItemMouth2', 'FuturisticHarnessPanelGag')
       } else if (InventoryGet(Player, 'ItemMouth3') == null) {
-        wearFuturisticRestraints('ItemMouth3', 'FuturisticPanelGag')
+        wearFuturisticRestraints('ItemMouth3', 'FuturisticHarnessPanelGag')
       }
       break
     case 'ItemPelvisFuturisticChastityBelt':
@@ -306,11 +312,7 @@ function ggtsDoRequired() {
       wearFuturisticRestraints('ItemBreast', 'FuturisticBra2')
       break
     case 'ItemTorsoFuturisticHarness':
-      if (InventoryGet(Player, 'ItemTorso') == null) {
-        wearFuturisticRestraints('ItemTorso', 'FuturisticHarness')
-      } else if (InventoryGet(Player, 'ItemTorso2') == null) {
-        wearFuturisticRestraints('ItemTorso2', 'FuturisticHarness')
-      }
+      wearFuturisticRestraints('ItemTorso', 'FuturisticHarness')
       break
     // GGTS Auto Task, Just do NOTHING
     case 'NoTalking':

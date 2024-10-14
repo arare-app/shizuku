@@ -63,7 +63,7 @@ function addCustomDialogToPlayer() {
     {
       Stage: 'ShizukuDialogCheatQuickBondageMenu',
       Option: '(Apply Random Bondage)',
-      Function: 'DialogFullRandomRestrain()',
+      Function: 'DialogFullRandomRestrain(Player)',
       NextStage: '0',
       Group: null,
       Prerequisite: '!CurrentCharacter.IsRestrained()',

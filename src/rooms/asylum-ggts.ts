@@ -170,11 +170,14 @@ function ggtsDoRequired() {
         if (!activity || allowedGroups.length == 0) {
           ChatRoomSendLocal('Activity group not found: ' + activity)
         }
-        while (AsylumGGTSTask !== null) {
+        const timer = setInterval(() => {
+          if (AsylumGGTSTask == null) {
+            clearInterval(timer)
+          }
           // In some cases the activity is not possible, so we need to try again until we find a valid one
           const Group = AssetGroupGet('Female3DCG', CommonRandomItemFromList(null, allowedGroups))
           ActivityRun(Player, AsylumGGTSTaskTarget ?? Player, Group, { Activity: activity }, true)
-        }
+        }, 1000)
       }
       break
     // Poses

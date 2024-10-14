@@ -421,26 +421,26 @@ function ggtsAutoSendChatMessage() {
 
   if (msg) {
     const inputValue = document.getElementById("InputChat") as HTMLTextAreaElement
-    if (!inputValue?.value) return
+    if (!inputValue) return
     inputValue.value = msg
     ChatRoomSendChat()
   }
 }
 
-modApi.hookFunction('CheatFactor', 10, (args, next) => {
-  // enable double GGTS time cheat for private GGTS room.
-  if (
-    args[0] === 'DoubleGGTSTime' &&
-    ChatRoomGame == 'GGTS' &&
-    ChatRoomData.Private &&
-    ChatSearchReturnToScreen == 'AsylumGGTS' &&
-    ChatRoomCharacter.length <= 1
-  ) {
-    return args[1]
-  }
+// modApi.hookFunction('CheatFactor', 10, (args, next) => {
+//   // enable double GGTS time cheat for private GGTS room.
+//   if (
+//     args[0] === 'DoubleGGTSTime' &&
+//     ChatRoomGame == 'GGTS' &&
+//     ChatRoomData.Private &&
+//     ChatSearchReturnToScreen == 'AsylumGGTS' &&
+//     ChatRoomCharacter.length <= 1
+//   ) {
+//     return args[1]
+//   }
 
-  return next(args)
-})
+//   return next(args)
+// })
 
 modApi.hookFunction('AsylumGGTSNewTask', 10, (args, next) => {
   next(args)
@@ -463,7 +463,9 @@ modApi.hookFunction('AsylumGGTSNewTask', 10, (args, next) => {
   }
 
   if (window.DialogShizukuGGTSEnabledAutoDoRequiredTask) {
-    ggtsDoRequired()
+    setTimeout(() => {
+      ggtsDoRequired()
+    }, 2000)
   }
 })
 

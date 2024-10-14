@@ -16,22 +16,22 @@
     "format": "prettier --write \"src/**/*.ts\" \"build/**/*\" \".github/**/*\" \"*.{json,md,html,yml,js}\""
   },
   "devDependencies": {
-    "@types/node": "^20.4.3",
-    "@typescript-eslint/eslint-plugin": "^6.4.1",
-    "@typescript-eslint/parser": "^6.4.1",
+    "@types/node": "^20.16.11",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
     "bc-stubs": "github:bananarama92/BC-stubs",
-    "esbuild-register": "^3.4.2",
-    "eslint": "^8.48.0",
-    "eslint-plugin-import": "^2.28.1",
-    "eslint-plugin-prettier": "^5.0.0",
-    "prettier": "^3.0.2",
-    "serve": "^14.2.0",
-    "socket.io-client": "^4.7.1",
-    "tsup": "^7.1.0",
+    "esbuild-register": "^3.6.0",
+    "eslint": "^8.57.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.3.3",
+    "serve": "^14.2.3",
+    "socket.io-client": "^4.8.0",
+    "tsup": "^7.2.0",
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "bondage-club-mod-sdk": "^1.1.0"
+    "bondage-club-mod-sdk": "^1.2.0"
   },
-  "packageManager": "yarn@4.4.0+sha512.91d93b445d9284e7ed52931369bc89a663414e5582d00eea45c67ddc459a2582919eece27c412d6ffd1bd0793ff35399381cb229326b961798ce4f4cc60ddfdb"
+  "packageManager": "yarn@4.3.1"
 }

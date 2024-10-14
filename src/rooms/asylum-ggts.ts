@@ -106,22 +106,12 @@ function addCustomDialogToPlayer() {
 }
 
 function init() {
-  if (window?.Player?.Dialog?.length) {
-    // Add to player dialog immediately because we're too late.
+  modApi.hookFunction('DialogDraw', 10, (args, next) => {    
+    if (!CharacterGetCurrent().IsPlayer()) return next(args)
+
     addCustomDialogToPlayer()
-  } else {
-    // Add to player dialog when it's ready
-    modApi.hookFunction('CharacterBuildDialog', 10, (args, next) => {
-      next(args)
-
-      if (!args[0].IsPlayer()) return
-
-      addCustomDialogToPlayer()
-
-      // Dispose of this hook
-      // dispose()
-    })
-  }
+    return next(args)
+  })
 }
 
 function wearFuturisticRestraints(group: AssetGroupName, item: string) {

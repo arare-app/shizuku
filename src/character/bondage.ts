@@ -99,23 +99,14 @@ function addCustomDialogToPlayer() {
 }
 
 function init() {
-  if (window?.Player?.Dialog?.length) {
-    // Add to player dialog immediately because we're too late.
+  // Add to player dialog when it's ready
+  modApi.hookFunction('DialogDraw', 10, (args, next) => {
+    // Early return if the current character is not the player.
+    if (!CharacterGetCurrent().IsPlayer()) return next(args)
+
     addCustomDialogToPlayer()
-  } else {
-    // Add to player dialog when it's ready
-    const dispose = modApi.hookFunction('CharacterBuildDialog', 10, (args, next) => {
-      next(args)
-
-      // Early return if the current character is not the player.
-      if (!args[0].IsPlayer()) return
-
-      addCustomDialogToPlayer()
-
-      // Dispose of this hook
-      dispose()
-    })
-  }
+    return next(args)
+  })
 }
 
 init()

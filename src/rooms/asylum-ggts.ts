@@ -227,6 +227,12 @@ function ggtsDoRequired() {
       }
       break
     // Poses
+    case 'PoseKneel':
+      CharacterSetActivePose(Player, 'Kneel')
+      break
+    case 'PoseStand':
+      CharacterSetActivePose(Player, 'BaseLower')
+      break
     case 'PoseOverHead':
       CharacterSetActivePose(Player, 'Yoked')
       break
@@ -353,6 +359,29 @@ function ggtsDoRequired() {
       } else if (InventoryGet(Player, 'ItemTorso2') == null) {
         wearFuturisticRestraints('ItemTorso2', 'FuturisticHarness')
       }
+      break
+    // GGTS Auto Task, Just do NOTHING
+    case 'NoTalking':
+    case 'ItemPose':
+    case 'ItemRemoveLimb':
+    case 'ItemRemoveBody':
+    case 'ItemRemoveHead':
+    case 'ItemUngag':
+    case 'ItemChaste':
+    case 'ItemUnchaste':
+    case 'ItemIntensity':
+    case 'ItemEarsDeaf':
+    case 'ItemMaskBlind':
+    case 'ItemFuckMachineIntensity':
+    case 'ItemTransform':
+    case 'ItemChangeGag':
+    case 'ItemBeltToFuck':
+    case 'ItemFuckToBelt':
+    case 'NewRuleNoOrgasm':
+    case 'UndoRuleNoOrgasm':
+    case 'UndoRuleKeepPose':
+    case 'LockRoom':
+    case 'UnlockRoom':
       break
   }
 

@@ -100,13 +100,26 @@ function addCustomDialogToPlayer() {
 
   const lastIndex = Player.Dialog.findIndex((dialog) => dialog.Stage === '0' && dialog.Function === 'DialogLeave()')
   for (let i = 0; i < customDialog.length; i++) {
-    if (Player.Dialog.includes(customDialog[i])) continue
+    if (
+      Player.Dialog.some(
+        (dialog) =>
+          dialog.Stage == customDialog[i].Stage &&
+          dialog.Option === customDialog[i].Option &&
+          dialog.Function === customDialog[i].Function &&
+          dialog.NextStage === customDialog[i].NextStage &&
+          dialog.Group === customDialog[i].Group &&
+          dialog.Prerequisite === customDialog[i].Prerequisite &&
+          dialog.Result === customDialog[i].Result &&
+          dialog.Trait === customDialog[i].Trait,
+      )
+    )
+      continue
     Player.Dialog.splice(lastIndex + i, 0, customDialog[i])
   }
 }
 
 function init() {
-  modApi.hookFunction('DialogDraw', 10, (args, next) => {    
+  modApi.hookFunction('DialogDraw', 10, (args, next) => {
     if (!CharacterGetCurrent().IsPlayer()) return next(args)
 
     addCustomDialogToPlayer()
@@ -384,7 +397,7 @@ function ggtsAutoSendChatMessage() {
   }
 
   if (msg) {
-    const inputValue = document.getElementById("InputChat") as HTMLTextAreaElement
+    const inputValue = document.getElementById('InputChat') as HTMLTextAreaElement
     if (!inputValue) return
     inputValue.value = msg
     ChatRoomSendChat()

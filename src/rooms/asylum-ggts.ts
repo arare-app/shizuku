@@ -272,7 +272,8 @@ function ggtsDoRequired() {
       break
     case 'ItemArmsFeetFuturisticCuffs':
       wearFuturisticRestraints('ItemArms', 'FuturisticCuffs')
-      wearFuturisticRestraints('ItemFeet', 'FuturisticCuffs')
+      wearFuturisticRestraints('ItemLegs', 'FuturisticLegCuffs')
+      wearFuturisticRestraints('ItemFeet', 'FuturisticAnkleCuffs')
       break
     case 'ItemBootsFuturisticHeels':
       wearFuturisticRestraints('ItemBoots', 'FuturisticHeels')

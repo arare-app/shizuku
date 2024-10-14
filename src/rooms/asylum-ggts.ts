@@ -3,12 +3,8 @@ import modApi from '../hooks/native'
 declare global {
   interface Window {
     DialogShizukuGGTSIsGGTS: () => boolean
-    DialogShizukuGGTSNoCurrentTask: () => void
-    DialogShizukuGGTSRequiresActivity: () => void
-    DialogShizukuGGTSRequiresPose: () => void
-    DialogShizukuGGTSRequiresCloth: () => void
-    DialogShizukuGGTSRequiresRestrainLegs: () => void
-    DialogShizukuGGTSRequiresItems: () => void
+    DialogShizukuGGTSNoCurrentTask: () => boolean
+    DialogShizukuGGTSHasCurrentTask: () => boolean
     DialogShizukuGGTSDoRequiredTask: () => void
     DialogShizukuGGTSEnabledAutoDoRequiredTask: boolean
     DialogShizukuGGTSAutoDoRequiredTask: () => void
@@ -66,51 +62,11 @@ function addCustomDialogToPlayer() {
     },
     {
       Stage: 'ShizukuDialogGGTSHelperMenu',
-      Option: '(Cheat: Set Required Pose)',
+      Option: '(Cheat: Do Required Task)',
       Function: 'DialogShizukuGGTSDoRequiredTask()',
       NextStage: '0',
       Group: null,
-      Prerequisite: 'DialogShizukuGGTSRequiresPose()',
-      Result: null,
-      Trait: null,
-    },
-    {
-      Stage: 'ShizukuDialogGGTSHelperMenu',
-      Option: '(Cheat: Set Required Clothes)',
-      Function: 'DialogShizukuGGTSDoRequiredTask()',
-      NextStage: '0',
-      Group: null,
-      Prerequisite: 'DialogShizukuGGTSRequiresCloth()',
-      Result: null,
-      Trait: null,
-    },
-    {
-      Stage: 'ShizukuDialogGGTSHelperMenu',
-      Option: '(Cheat: Do Required Activity)',
-      Function: 'DialogShizukuGGTSDoRequiredTask()',
-      NextStage: '0',
-      Group: null,
-      Prerequisite: 'DialogShizukuGGTSRequiresActivity()',
-      Result: null,
-      Trait: null,
-    },
-    {
-      Stage: 'ShizukuDialogGGTSHelperMenu',
-      Option: '(Cheat: Restrain Legs)',
-      Function: 'DialogShizukuGGTSDoRequiredTask()',
-      NextStage: '0',
-      Group: null,
-      Prerequisite: 'DialogShizukuGGTSRequiresRestrainLegs()',
-      Result: null,
-      Trait: null,
-    },
-    {
-      Stage: 'ShizukuDialogGGTSHelperMenu',
-      Option: '(Cheat: Wear Required Items)',
-      Function: 'DialogShizukuGGTSDoRequiredTask()',
-      NextStage: '0',
-      Group: null,
-      Prerequisite: 'DialogShizukuGGTSRequiresItems()',
+      Prerequisite: 'DialogShizukuGGTSHasCurrentTask()',
       Result: null,
       Trait: null,
     },
@@ -130,20 +86,8 @@ function addCustomDialogToPlayer() {
   window.DialogShizukuGGTSNoCurrentTask ??= function () {
     return AsylumGGTSTask == null
   }
-  window.DialogShizukuGGTSRequiresActivity ??= function () {
-    return AsylumGGTSTask?.startsWith('Activity')
-  }
-  window.DialogShizukuGGTSRequiresPose ??= function () {
-    return AsylumGGTSTask?.startsWith('Pose')
-  }
-  window.DialogShizukuGGTSRequiresCloth ??= function () {
-    return AsylumGGTSTask?.startsWith('Cloth')
-  }
-  window.DialogShizukuGGTSRequiresRestrainLegs ??= function () {
-    return AsylumGGTSTask?.startsWith('RestrainLegs')
-  }
-  window.DialogShizukuGGTSRequiresItems ??= function () {
-    return AsylumGGTSTask?.startsWith('Item')
+  window.DialogShizukuGGTSHasCurrentTask ??= function () {
+    return AsylumGGTSTask != null
   }
   window.DialogShizukuGGTSDoRequiredTask ??= ggtsDoRequired
   window.DialogShizukuGGTSEnabledAutoDoRequiredTask ??= false
@@ -154,7 +98,7 @@ function addCustomDialogToPlayer() {
     window.DialogShizukuGGTSEnabledAutoDoRequiredTask = false
   }
 
-  const lastIndex = Player.Dialog.findIndex((dialog) => dialog.Stage === '0' && dialog.Option === '(Leave this menu.)')
+  const lastIndex = Player.Dialog.findIndex((dialog) => dialog.Stage === '0' && dialog.Function === 'DialogLeave()')
   for (let i = 0; i < customDialog.length; i++) {
     if (Player.Dialog.includes(customDialog[i])) continue
     Player.Dialog.splice(lastIndex + i, 0, customDialog[i])
@@ -167,7 +111,7 @@ function init() {
     addCustomDialogToPlayer()
   } else {
     // Add to player dialog when it's ready
-    const dispose = modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
+    modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
       next(args)
 
       if (!args[0].IsPlayer()) return
@@ -175,7 +119,7 @@ function init() {
       addCustomDialogToPlayer()
 
       // Dispose of this hook
-      dispose()
+      // dispose()
     })
   }
 }
@@ -189,6 +133,7 @@ function wearFuturisticRestraints(group: AssetGroupName, item: string) {
 }
 
 function ggtsDoRequired() {
+  if (!isGGTS()) return
   if (AsylumGGTSTask == null) {
     AsylumGGTSNewTask()
     return DialogLeave()

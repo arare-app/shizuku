@@ -104,7 +104,7 @@ function init() {
     addCustomDialogToPlayer()
   } else {
     // Add to player dialog when it's ready
-    const dispose = modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
+    const dispose = modApi.hookFunction('CharacterBuildDialog', 10, (args, next) => {
       next(args)
 
       // Early return if the current character is not the player.

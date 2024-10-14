@@ -111,7 +111,7 @@ function init() {
     addCustomDialogToPlayer()
   } else {
     // Add to player dialog when it's ready
-    modApi.hookFunction('CharacterBuildDialog', 10, (args: [Character], next) => {
+    modApi.hookFunction('CharacterBuildDialog', 10, (args, next) => {
       next(args)
 
       if (!args[0].IsPlayer()) return

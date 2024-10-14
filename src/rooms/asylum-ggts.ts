@@ -10,6 +10,9 @@ declare global {
     DialogShizukuGGTSRequiresRestrainLegs: () => void
     DialogShizukuGGTSRequiresItems: () => void
     DialogShizukuGGTSDoRequiredTask: () => void
+    DialogShizukuGGTSEnabledAutoDoRequiredTask: boolean
+    DialogShizukuGGTSAutoDoRequiredTask: () => void
+    DialogShizukuGGTSDisableAutoDoRequiredTask: () => void
   }
 }
 
@@ -33,7 +36,27 @@ function addCustomDialogToPlayer() {
     },
     {
       Stage: 'ShizukuDialogGGTSHelperMenu',
-      Option: '(New Task)',
+      Option: '(Cheat: Auto Do Required Task)',
+      Function: 'DialogShizukuGGTSAutoDoRequiredTask()',
+      NextStage: '0',
+      Group: null,
+      Prerequisite: 'DialogShizukuGGTSEnabledAutoDoRequiredTask',
+      Result: '(Auto do required task enabled.)',
+      Trait: null,
+    },
+    {
+      Stage: 'ShizukuDialogGGTSHelperMenu',
+      Option: '(Cheat: Disable Auto Do Required Task)',
+      Function: 'DialogShizukuGGTSDisableAutoDoRequiredTask()',
+      NextStage: '0',
+      Group: null,
+      Prerequisite: '!DialogShizukuGGTSEnabledAutoDoRequiredTask',
+      Result: '(Auto do required task disabled.)',
+      Trait: null,
+    },
+    {
+      Stage: 'ShizukuDialogGGTSHelperMenu',
+      Option: '(Cheat: New Task without Waiting)',
       Function: 'DialogShizukuGGTSDoRequiredTask()',
       NextStage: '0',
       Group: null,
@@ -43,7 +66,7 @@ function addCustomDialogToPlayer() {
     },
     {
       Stage: 'ShizukuDialogGGTSHelperMenu',
-      Option: '(Set Required Pose)',
+      Option: '(Cheat: Set Required Pose)',
       Function: 'DialogShizukuGGTSDoRequiredTask()',
       NextStage: '0',
       Group: null,
@@ -53,7 +76,7 @@ function addCustomDialogToPlayer() {
     },
     {
       Stage: 'ShizukuDialogGGTSHelperMenu',
-      Option: '(Set Required Clothes)',
+      Option: '(Cheat: Set Required Clothes)',
       Function: 'DialogShizukuGGTSDoRequiredTask()',
       NextStage: '0',
       Group: null,
@@ -63,7 +86,7 @@ function addCustomDialogToPlayer() {
     },
     {
       Stage: 'ShizukuDialogGGTSHelperMenu',
-      Option: '(Do Required Activity)',
+      Option: '(Cheat: Do Required Activity)',
       Function: 'DialogShizukuGGTSDoRequiredTask()',
       NextStage: '0',
       Group: null,
@@ -73,7 +96,7 @@ function addCustomDialogToPlayer() {
     },
     {
       Stage: 'ShizukuDialogGGTSHelperMenu',
-      Option: '(Restrain Legs)',
+      Option: '(Cheat: Restrain Legs)',
       Function: 'DialogShizukuGGTSDoRequiredTask()',
       NextStage: '0',
       Group: null,
@@ -83,7 +106,7 @@ function addCustomDialogToPlayer() {
     },
     {
       Stage: 'ShizukuDialogGGTSHelperMenu',
-      Option: '(Wear Required Items)',
+      Option: '(Cheat: Wear Required Items)',
       Function: 'DialogShizukuGGTSDoRequiredTask()',
       NextStage: '0',
       Group: null,
@@ -123,6 +146,13 @@ function addCustomDialogToPlayer() {
     return AsylumGGTSTask?.startsWith('Item')
   }
   window.DialogShizukuGGTSDoRequiredTask ??= ggtsDoRequired
+  window.DialogShizukuGGTSEnabledAutoDoRequiredTask ??= false
+  window.DialogShizukuGGTSAutoDoRequiredTask ??= function () {
+    window.DialogShizukuGGTSEnabledAutoDoRequiredTask = true
+  }
+  window.DialogShizukuGGTSDisableAutoDoRequiredTask ??= function () {
+    window.DialogShizukuGGTSEnabledAutoDoRequiredTask = false
+  }
 
   const lastIndex = Player.Dialog.findIndex((dialog) => dialog.Stage === '0' && dialog.Option === '(Leave this menu.)')
   for (let i = 0; i < customDialog.length; i++) {
@@ -260,7 +290,8 @@ function ggtsDoRequired() {
       CharacterNaked(Player)
       break
     case 'RestrainLegs':
-      InventoryWearRandom(Player, 'ItemLegs', 0, true, true)
+      // InventoryWearRandom(Player, 'ItemLegs', 0, true, true)
+      InventoryWear(Player, 'HempRope', 'ItemLegs', null, 100)
       break
 
     // Restraints
@@ -325,21 +356,16 @@ function ggtsDoRequired() {
       break
   }
 
+  if (AsylumGGTSTask?.startsWith('Query')) {
+    ggtsAutoSendChatMessage()
+  }
+
   DialogLeave()
 }
 
-modApi.hookFunction('ChatRoomSendChat', 10, (args, next) => {
-  if (ChatRoomGame != 'GGTS') return next(args)
-
-  let msg = ElementValue('InputChat').trim()
-  if (msg != '') {
-    if (AsylumGGTSTask == 'NoTalking') {
-      msg = '*' + msg
-    } else {
-      return next(args)
-    }
-  }
-
+function ggtsAutoSendChatMessage() {
+  if (!AsylumGGTSTask) return
+  let msg = ''
   const Level = AsylumGGTSGetLevel(Player)
   switch (AsylumGGTSTask) {
     case 'QueryWhatIsGGTS':
@@ -389,20 +415,17 @@ modApi.hookFunction('ChatRoomSendChat', 10, (args, next) => {
       break
 
     default:
-      return next(args)
+      console.log('Unknown query: ' + AsylumGGTSTask)
+      break
   }
 
-  if (msg != '') {
-    ChatRoomLastMessage.push(msg)
-    ChatRoomLastMessageIndex = ChatRoomLastMessage.length
-
-    CommandParse(msg)
-
-    return
+  if (msg) {
+    const inputValue = document.getElementById("InputChat") as HTMLTextAreaElement
+    if (!inputValue?.value) return
+    inputValue.value = msg
+    ChatRoomSendChat()
   }
-
-  return next(args)
-})
+}
 
 modApi.hookFunction('CheatFactor', 10, (args, next) => {
   // enable double GGTS time cheat for private GGTS room.
@@ -437,6 +460,10 @@ modApi.hookFunction('AsylumGGTSNewTask', 10, (args, next) => {
         })
       }
     })
+  }
+
+  if (window.DialogShizukuGGTSEnabledAutoDoRequiredTask) {
+    ggtsDoRequired()
   }
 })
 

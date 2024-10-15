@@ -127,6 +127,43 @@ function init() {
   })
 }
 
+let initialClothes = {
+  Cloth: null as Asset | null,
+  ClothLower: null as Asset | null,
+}
+
+modApi.hookFunction('AsylumGGTSLoad', 10, (args, next) => {
+  next(args)
+
+  // Save initial clothes
+  initialClothes = {
+    Cloth: Player.Appearance.find((item) => item.Asset.Group.Name === 'Cloth')?.Asset ?? null,
+    ClothLower: Player.Appearance.find((item) => item.Asset.Group.Name === 'ClothLower')?.Asset ?? null,
+  }
+})
+
+/**
+ * There are some activities that require player has free legs.
+ * So we try to release legs if they are restrained.
+ */
+function tryReleaseLegs() {
+  if (!Player.IsRestrained()) return
+
+  // If there is a `KeepPose` rule, we should set active pose to `LegsClosed` before release player.
+  if (Player.Pose.includes('LegsClosed') && Player.Game?.GGTS?.Rule?.includes('KeepPose')) {
+    CharacterSetActivePose(Player, 'LegsClosed', true)
+  }
+
+  // Then release legs
+  const legs = ['ItemLegs', 'ItemFeet'] as const
+  legs.forEach((group) => {
+    const item = InventoryGet(Player, group)
+    if (item) {
+      InventoryRemove(Player, group)
+    }
+  })
+}
+
 function wearFuturisticRestraints(group: AssetGroupName, item: string) {
   if (InventoryGet(Player, group) == null) {
     InventoryWear(Player, item, group, '#202020', 0)
@@ -157,6 +194,8 @@ function ggtsDoRequired() {
     case 'ActivityTickle':
     case 'ActivityWiggle':
       {
+        tryReleaseLegs()
+
         const activity = ActivityFemale3DCG.find((item) => item.Name === AsylumGGTSTask.substr(8))
         const groups = (activity.TargetSelf === true ? activity.Target : activity.TargetSelf) ?? []
         const allowedGroups = groups.filter((group) =>
@@ -182,9 +221,11 @@ function ggtsDoRequired() {
       break
     // Poses
     case 'PoseKneel':
+      tryReleaseLegs()
       CharacterSetActivePose(Player, 'Kneel')
       break
     case 'PoseStand':
+      tryReleaseLegs()
       CharacterSetActivePose(Player, 'BaseLower')
       break
     case 'PoseOverHead':
@@ -194,9 +235,11 @@ function ggtsDoRequired() {
       CharacterSetActivePose(Player, 'BackCuffs')
       break
     case 'PoseLegsOpen':
+      tryReleaseLegs()
       CharacterSetActivePose(Player, 'BaseLower')
       break
     case 'PoseLegsClosed':
+      tryReleaseLegs()
       CharacterSetActivePose(Player, 'LegsClosed')
       break
     // Clothes
@@ -226,9 +269,23 @@ function ggtsDoRequired() {
       }
       break
     case 'ClothUpperLowerOn':
-      if (InventoryGet(Player, 'Cloth') == null) {
-        // Load the cloth from wardrobe
+      if (InventoryGet(Player, 'Cloth') == null || InventoryGet(Player, 'ClothLower') == null) {
+        // 1. Set the initial clothes
+        if (initialClothes.Cloth == null && initialClothes.ClothLower == null) {
+          CharacterAppearanceSetItem(Player, 'Cloth', initialClothes.Cloth)
+          CharacterAppearanceSetItem(Player, 'ClothLower', initialClothes.ClothLower)
+        }
+      }
+
+      if (InventoryGet(Player, 'Cloth') == null || InventoryGet(Player, 'ClothLower') == null) {
+        // 2. Load the cloth from wardrobe
         WardrobeFastLoad(Player, 0, false)
+      }
+
+      if (InventoryGet(Player, 'Cloth') == null || InventoryGet(Player, 'ClothLower') == null) {
+        // 3. Wear random clothes
+        InventoryWearRandom(Player, 'Cloth', 0, true, true)
+        InventoryWearRandom(Player, 'ClothLower', 0, true, true)
       }
       break
     case 'ClothUpperLowerOff':

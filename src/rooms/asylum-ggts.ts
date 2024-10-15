@@ -215,7 +215,9 @@ function ggtsDoRequired() {
           }
           // In some cases the activity is not possible, so we need to try again until we find a valid one
           const Group = AssetGroupGet('Female3DCG', CommonRandomItemFromList(null, allowedGroups))
-          ActivityRun(Player, AsylumGGTSTaskTarget ?? Player, Group, { Activity: activity }, true)
+          if (Group) {
+            ActivityRun(Player, AsylumGGTSTaskTarget ?? Player, Group, { Activity: activity }, true)
+          }
         }, 1000)
       }
       break
